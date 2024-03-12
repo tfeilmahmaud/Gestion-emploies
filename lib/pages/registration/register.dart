@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gemp/api/API.dart'; // Importez votre fichier d'API pour les appels réseau
+import 'package:gemp/api/API.dart';
+import 'package:gemp/pages/Home.dart';
+import 'package:gemp/pages/registration/Signin.dart'; // Assurez-vous d'importer votre fichier d'API pour les appels réseau
 
 class Signup extends StatefulWidget {
   @override
@@ -92,15 +94,19 @@ class _SignupState extends State<Signup> {
       };
 
       // Effectuez votre appel d'API pour le processus d'inscription
-     // await registerUser(data);
+      bool success = await registerUser('email','username','password');
 
       setState(() {
         _isLoading = false;
       });
 
-      // Après l'inscription, vous pouvez effectuer une action comme rediriger l'utilisateur vers une autre page
-      // Par exemple :
-      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+      if (success) {
+        // Après l'inscription, vous pouvez effectuer une action comme rediriger l'utilisateur vers une autre page
+        // Par exemple :
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Signin()));
+      } else {
+        // Gérez l'échec de l'inscription
+      }
     }
   }
 }

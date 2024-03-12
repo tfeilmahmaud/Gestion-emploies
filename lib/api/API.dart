@@ -95,6 +95,39 @@ Future<void> loginData(String url, Map<String, dynamic> data) async {
 }
 
 
+
+Future<bool> registerUser(String username, String email, String password) async {
+  try {
+    // Créez les données à envoyer au serveur
+    Map<String, String> userData = {
+      'username': username,
+      'email': email,
+      'password': password,
+    };
+
+    // Effectuez une requête POST vers l'URL d'enregistrement avec les données utilisateur
+    final response = await http.post(
+      Uri.parse(serversite +'register/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(userData),
+    );
+
+    // Vérifiez si la réponse du serveur est un succès (code 200)
+    if (response.statusCode == 200) {
+      // L'enregistrement a réussi
+      return true;
+    } else {
+      // L'enregistrement a échoué
+      return false;
+    }
+  } catch (e) {
+    // Gérez les erreurs, par exemple, affichez un message d'erreur ou enregistrez les erreurs dans les journaux
+    print('Error in registerUser: $e');
+    return false;
+  }
+}
 // final ControllerPage ctrl = Get.find();
 // final String serversite = 'your_server_url_here'; // Assurez-vous de définir votre URL de serveur
 
@@ -175,7 +208,7 @@ postData(url, data) async {
   }
 }
 
-final String serversite = 'http://127.0.0.1:8000/'; // Assurez-vous de définir votre URL de serveur
+//final String serversite = 'http://127.0.0.1:8000/'; // Assurez-vous de définir votre URL de serveur
 
 Future<void> patchDataForDepartmentName(int departmentId, String newName) async {
   final url = 'department'; // Remplacez ceci par votre URL de mise à jour du nom de département
